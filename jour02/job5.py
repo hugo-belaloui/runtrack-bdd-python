@@ -1,13 +1,16 @@
 import mysql.connector
+import os 
+import dotenv
 
-connect_db = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "Rootp54",
-    db = "laplateforme"
-    )
+dotenv.load_dotenv()
+db_connect = mysql.connector.connect(
+    host = os.getenv("DB_HOST"),
+    user = os.getenv("DB_USER"),
+    password = os.getenv("DB_PASSWORD"),
+    db = os.getenv("DB_NAME")
+    )   
 
-cursor = connect_db.cursor()
+cursor = db_connect.cursor()
 
 request = "SELECT SUM(superficie) FROM etage"
 
@@ -19,4 +22,4 @@ result_suming = result_sum[0]
 print(f"La sueprficie de La Plateforme est de {(result_suming)} m2")
 
 cursor.close()
-connect_db.close()
+db_connect.close()
